@@ -5,6 +5,8 @@ VisualStudioVersion = 17.14.36616.10 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rose_Bakery", "Rose_Bakery\Rose_Bakery.csproj", "{A2EA67B2-E3D8-4A0D-883E-C1E8814EA796}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rose_Bakery.Tests", "Rose_Bakery.Tests\Rose_Bakery.Tests.csproj", "{E5B2E3E5-E3D8-4A0D-883E-C1E8814EA797}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{A2EA67B2-E3D8-4A0D-883E-C1E8814EA796}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A2EA67B2-E3D8-4A0D-883E-C1E8814EA796}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A2EA67B2-E3D8-4A0D-883E-C1E8814EA796}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5B2E3E5-E3D8-4A0D-883E-C1E8814EA797}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5B2E3E5-E3D8-4A0D-883E-C1E8814EA797}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5B2E3E5-E3D8-4A0D-883E-C1E8814EA797}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5B2E3E5-E3D8-4A0D-883E-C1E8814EA797}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
