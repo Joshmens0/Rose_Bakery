@@ -16,42 +16,50 @@ namespace Rose_Bakery.Service.Implementation
             try
             {
                 var category = await _bakery.Categories
-                    .Include(x=>x.Products)
+                    .Include(x => x.Products)
                     .ToListAsync();
-                if (category == null)
+
+                if (category == null || !category.Any())
                 {
-                    return new List<BakeryResponseDto>().Select(b=> new BakeryResponseDto() 
-                    { 
-                        StatusCode=StatusCodes.Status404NotFound,
-                        StatusMessage="No Data Found, Failed"
-                    }).ToList();
+                    return new List<BakeryResponseDto>
+                    {
+                        new ()
+                        {
+                            StatusCode = StatusCodes.Status404NotFound,
+                            StatusMessage = "No Data Found, Failed"
+                        }
+                    };
                 }
-                var collection = category.Select(c=> new  BakeryResponseDto()
+
+                var collection = category.Select(c => new BakeryResponseDto()
                 {
-                     CatgoryName = c.Name,
-                     Products= c.Products
-                     .Select(p=> new ProductResponseDto() 
-                     { 
-                         Name = p.Name,
-                         ImageUrl=p.ImageUrl,
-                         Description=p.Description,
-                         Price=p.Price,
-                         StatusCode = StatusCodes.Status200OK,
-                         StatusMessage="Product Retrieved Successfully!"
-                     }).ToList(),
-                      StatusCode = StatusCodes.Status200OK,
-                      StatusMessage= "Success"
+                    CatgoryName = c.Name,
+                    Products = c.Products
+                        .Select(p => new ProductResponseDto()
+                        {
+                            Name = p.Name,
+                            ImageUrl = p.ImageUrl,
+                            Description = p.Description,
+                            Price = p.Price,
+                            StatusCode = StatusCodes.Status200OK,
+                            StatusMessage = "Product Retrieved Successfully!"
+                        }).ToList(),
+                    StatusCode = StatusCodes.Status200OK,
+                    StatusMessage = "Success"
                 });
                 return collection.ToList();
             }
-
             catch (Exception ex)
             {
-                   return new List<BakeryResponseDto>().Select(b=> new BakeryResponseDto() 
-                   {
-                       StatusCode=StatusCodes.Status500InternalServerError,
-                       StatusMessage=ex.Message
-                   }).ToList();
+                _logger.LogError(ex, "An error occurred while getting the bakery collection");
+                return new List<BakeryResponseDto>
+                {
+                    new ()
+                    {
+                        StatusCode = StatusCodes.Status500InternalServerError,
+                        StatusMessage = ex.Message
+                    }
+                };
             }
         }
     }
