@@ -39,6 +39,9 @@ namespace Rose_Bakery.Service.Implementation
                 {
                     UserName = request.UserName,
                     CategoryId = category.Id,
+                    Category=category,
+                    Product=product,
+                    CreatedOn = DateTime.UtcNow,
                     ProductId = product.Id,
                     Payment = GlobalEnum.Payment.Pending,
                     Delivery = GlobalEnum.Delivery.Pending,
@@ -48,7 +51,7 @@ namespace Rose_Bakery.Service.Implementation
                     Address = request.Address,
                 };
 
-                _bakeryDbContext.Orders.Add(newOrder);
+                await _bakeryDbContext.Orders.AddAsync(newOrder);
                 await _bakeryDbContext.SaveChangesAsync();
 
                 return new OrderResponseDto

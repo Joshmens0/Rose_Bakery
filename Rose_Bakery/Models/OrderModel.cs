@@ -17,7 +17,7 @@ namespace Rose_Bakery.Models
         public string? AltPhoneNumber { get; set; }
         public string TownOrCity { get; set; }
         public string Address { get; set; }
-        public float? AmountPaid { get; set; }
+        public decimal? AmountPaid { get; set; }
         public string? TransactionId { get; set; }
         public DateTime? OrderClosedDate { get; set; }
     }

@@ -19,7 +19,7 @@ namespace Rose_Bakery.Service.Implementation
                     .Include(x => x.Products)
                     .ToListAsync();
 
-                if (category == null || !category.Any())
+                if (category.Count <=0)
                 {
                     return new List<BakeryResponseDto>
                     {

@@ -185,7 +185,7 @@ namespace Rose_Bakery.Service.Implementation
                 if (productList.Count > 0) 
                 {
 
-                    if (productList.Count() <= 0)
+                    if (productList.Any())
                     {
                         _logger.LogInformation("there are no product records in the database");
                         return new List<ProductResponseDto>().Select(x => new ProductResponseDto()
