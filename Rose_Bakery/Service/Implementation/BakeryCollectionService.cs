@@ -11,6 +11,55 @@ namespace Rose_Bakery.Service.Implementation
         private readonly IBakeryDbContext _bakery=bakery;
         private readonly ILogger<BakeryCollectionService> _logger=logger;
 
+        public async Task<IEnumerable<BakeryResponseDto>> GetPagedCollection(int page, int pageSize)
+        {
+            try
+            {
+                //take the data from the database
+                var Collection=await _bakery.Categories
+                    .Include(p=>p.Products)
+                    .ToListAsync();
+                if(!Collection.Any())
+                {
+                    return new List<BakeryResponseDto>()
+                        .Select(p=>new BakeryResponseDto()
+                    {
+                        StatusCode = StatusCodes.Status404NotFound,
+                        StatusMessage = "No Data Found, Failed"
+                    }).ToList();
+                }
+                var TotalCount= Collection.Count();
+                var TotalPages = (int)Math.Ceiling((decimal)TotalCount / pageSize);
+                var ProductPerPage = Collection
+                    .Skip((page - 1) * pageSize)
+                    .Take(pageSize).Select(c => new BakeryResponseDto()
+                    {
+                        CatgoryName = c.Name,
+                        Products =c.Products.Select(p => new ProductResponseDto()
+                        {
+                            Price = p.Price,
+                            CategoryName = p.Category.Name,
+                            Name = p.Name,
+                            Description = p.Description,
+                            ImageUrl = p.ImageUrl,
+                            StatusCode = StatusCodes.Status200OK,
+                            StatusMessage = "Success"
+                        }).ToList()
+                    });
+
+                return ProductPerPage.ToList();
+
+            }
+            catch (Exception ex)
+            {
+                return new List<BakeryResponseDto>()
+                       .Select(p => new BakeryResponseDto()
+                       {
+                           StatusCode = StatusCodes.Status404NotFound,
+                           StatusMessage = $"{ex}"
+                       }).ToList();
+            }
+        }
         public async Task<IList<BakeryResponseDto>> GetBakeryCollectionAsync()
         {
             try

@@ -6,7 +6,7 @@ using Rose_Bakery.Service.Interface;
 namespace Rose_Bakery.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class ProductController(IProductService service) : ControllerBase
     {
         private readonly IProductService _service=service;

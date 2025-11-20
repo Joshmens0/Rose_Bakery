@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace Rose_Bakery.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class OrderController : ControllerBase
     {
         private readonly IOrderService _orderService;
@@ -37,6 +37,12 @@ namespace Rose_Bakery.Controllers
             }
 
             return Ok(response);
+        }
+        [HttpGet("get-all-orders")]
+        public async Task<IActionResult> GetAllOrders()
+        {
+            var orders = await _orderService.GetAllOrdersAsync();
+            return Ok(orders);
         }
     }
 }

@@ -5,6 +5,6 @@ namespace Rose_Bakery.Service.Interface
     public interface IBakeryCollectionService
     {
         Task<IList<BakeryResponseDto>> GetBakeryCollectionAsync();
-
+        Task<IEnumerable<BakeryResponseDto>> GetPagedCollection(int page, int pageSize);
     }
 }

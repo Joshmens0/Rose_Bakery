@@ -7,5 +7,6 @@ namespace Rose_Bakery.Service.Interface
     public interface IOrderService
     {
         Task<OrderResponseDto> CreateOrderAsync(OrderRequestDto request);
+        Task<IList<GetAllOrdersResponseDto>> GetAllOrdersAsync();
     }
 }
