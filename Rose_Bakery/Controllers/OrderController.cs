@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Rose_Bakery.Dto.Request;
 using Rose_Bakery.Service.Interface;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 namespace Rose_Bakery.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class OrderController : ControllerBase
     {
         private readonly IOrderService _orderService;
@@ -15,7 +16,7 @@ namespace Rose_Bakery.Controllers
         {
             _orderService = orderService;
         }
-
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> CreateOrder([FromBody] OrderRequestDto request)
         {
@@ -37,6 +38,13 @@ namespace Rose_Bakery.Controllers
             }
 
             return Ok(response);
+        }
+        [AllowAnonymous]
+        [HttpGet("get-all-orders")]
+        public async Task<IActionResult> GetAllOrders()
+        {
+            var orders = await _orderService.GetAllOrdersAsync();
+            return Ok(orders);
         }
     }
 }

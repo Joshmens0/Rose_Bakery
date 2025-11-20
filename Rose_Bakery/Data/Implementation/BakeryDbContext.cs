@@ -12,6 +12,7 @@ namespace Rose_Bakery.Data.Implementation
         public DbSet<ProductModel> Products { get; set; }
 
         public DbSet<OrderModel> Orders { get; set; }
+        public DbSet<UserModel> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

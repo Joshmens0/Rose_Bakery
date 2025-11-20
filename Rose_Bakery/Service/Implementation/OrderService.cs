@@ -39,8 +39,8 @@ namespace Rose_Bakery.Service.Implementation
                 {
                     UserName = request.UserName,
                     CategoryId = category.Id,
-                    Category=category,
-                    Product=product,
+                    Category = category,
+                    Product = product,
                     CreatedOn = DateTime.UtcNow,
                     ProductId = product.Id,
                     Payment = GlobalEnum.Payment.Pending,
@@ -69,6 +69,61 @@ namespace Rose_Bakery.Service.Implementation
             {
                 _logger.LogError(ex, "An error occurred while creating the order");
                 return new OrderResponseDto { StatusCode = 500, StatusMessage = "An internal server error occurred" };
+            }
+        }
+
+        Task<OrderResponseDto> IOrderService.CreateOrderAsync(OrderRequestDto request)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<IList<GetAllOrdersResponseDto>> GetAllOrdersAsync()
+        {
+            try
+            {
+                // Retrieve all orders with related product and category data
+                var orders = await _bakeryDbContext.Orders
+                    .Include(o => o.Product)
+                    .Include(o => o.Category)
+                    .ToListAsync();
+                if (orders == null || !orders.Any())
+                {
+                    return new List<GetAllOrdersResponseDto>
+                    {
+                        new GetAllOrdersResponseDto
+                        {
+                            StatusCode = StatusCodes.Status404NotFound,
+                            StatusMessage = "No orders found"
+                        }
+                    };
+                }
+                // Map orders to OrderResponseDto
+                return orders.Select(o => new GetAllOrdersResponseDto
+                {
+                    Address = o.Address,
+                    CustomerName = o.UserName,
+                    PhoneNumber = o.PhoneNumber,
+                    OrderDate = o.CreatedOn,
+                    ProductCategory = o.Category.Name,
+                    ProductName = o.Product.Name,
+                    TownOrCity = o.TownOrCity,
+                    TotalAmount = o.Product.Price,
+                    StatusCode = StatusCodes.Status200OK,
+                    StatusMessage = "Orders retrieved successfully"
+
+                }).ToList();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while retrieving orders");
+                return new List<GetAllOrdersResponseDto>().Select
+                    (
+                        o => new GetAllOrdersResponseDto
+                        {
+                            StatusCode = StatusCodes.Status500InternalServerError,
+                            StatusMessage = "An internal server error occurred"
+                        }
+                    ).ToList();
             }
         }
     }

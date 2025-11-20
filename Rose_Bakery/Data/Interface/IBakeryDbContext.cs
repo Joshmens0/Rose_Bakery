@@ -8,7 +8,7 @@ namespace Rose_Bakery.Data.Interface
         DbSet<CategoryModel> Categories { get; set; }
         DbSet<ProductModel> Products { get; set; }
         DbSet<OrderModel> Orders { get; set; }
-
+        DbSet<UserModel> Users { get; set; }
         Task<int> SaveChangesAsync(CancellationToken cancellationToken=default);
 
     }

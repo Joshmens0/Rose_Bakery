@@ -12,7 +12,8 @@ namespace Rose_Bakery.Extensions
               service.AddScoped<ICategoryService,CategoryService>()
                 .AddScoped<IProductService,ProductService>()
                 .AddScoped<IBakeryCollectionService,BakeryCollectionService>()
-                .AddScoped<IOrderService, OrderService>();
+                .AddScoped<IOrderService, OrderService>()
+                .AddScoped<IUserService,UserService>();
         }
     }
 }
